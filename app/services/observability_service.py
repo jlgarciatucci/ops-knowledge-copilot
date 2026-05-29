@@ -1,5 +1,8 @@
 import json
+import uuid
+
 import asyncpg
+
 from app.services.llm_service import LLMResult
 
 
@@ -7,8 +10,16 @@ class ObservabilityService:
     def __init__(self, conn: asyncpg.Connection):
         self.conn = conn
 
-    async def log_query(self, question: str, answer: str, chunks: list[dict], latency_ms: int, llm: LLMResult, groundedness_score: float | None) -> str:
-        chunk_ids = [str(c['chunk_id']) for c in chunks]
+    async def log_query(
+        self,
+        question: str,
+        answer: str,
+        chunks: list[dict],
+        latency_ms: int,
+        llm: LLMResult,
+        groundedness_score: float | None,
+    ) -> str:
+        chunk_ids = [uuid.UUID(str(c['chunk_id'])) for c in chunks]
         row = await self.conn.fetchrow(
             '''
             INSERT INTO query_logs (

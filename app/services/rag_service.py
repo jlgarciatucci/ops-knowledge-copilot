@@ -1,13 +1,15 @@
 import time
+
 import asyncpg
+
 from app.core.config import Settings
 from app.services.embedding_service import EmbeddingService
-from app.services.vector_store import VectorStore
-from app.services.reranker import SimpleReranker
-from app.services.prompt_builder import PromptBuilder
-from app.services.llm_service import LLMService
 from app.services.groundedness_service import GroundednessService
+from app.services.llm_service import LLMService
 from app.services.observability_service import ObservabilityService
+from app.services.prompt_builder import PromptBuilder
+from app.services.reranker import SimpleReranker
+from app.services.vector_store import VectorStore
 
 
 class RagService:
@@ -24,12 +26,19 @@ class RagService:
 
     async def answer(self, question: str, top_k: int, filters: dict[str, str] | None) -> dict:
         start = time.perf_counter()
-        query_embedding = await self.embedding_service.embed(question)
+
+        # NVIDIA NV-EmbedCode requires input_type='query' for user questions.
+        query_embedding = await self.embedding_service.embed(question, input_type='query')
+
         retrieved = await self.vector_store.search(query_embedding, top_k=top_k, filters=filters)
         reranked = self.reranker.rerank(question, retrieved)
         prompt = self.prompt_builder.build(question, reranked)
         llm_result = await self.llm_service.generate(prompt, reranked)
-        groundedness = self.groundedness_service.score(llm_result.answer, reranked) if self.settings.enable_groundedness_check else None
+        groundedness = (
+            self.groundedness_service.score(llm_result.answer, reranked)
+            if self.settings.enable_groundedness_check
+            else None
+        )
         latency_ms = int((time.perf_counter() - start) * 1000)
         query_id = await self.observability_service.log_query(
             question=question,
