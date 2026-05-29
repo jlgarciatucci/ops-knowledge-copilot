@@ -40,3 +40,12 @@ app.include_router(documents.router)
 app.include_router(query.router)
 app.include_router(feedback.router)
 app.include_router(metrics.router)
+
+@app.get("/")
+async def root():
+    return {
+        "name": "Ops Knowledge Copilot API",
+        "status": "running",
+        "docs": "/docs",
+        "health": "/health"
+    }
