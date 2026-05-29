@@ -1,0 +1,24 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="520"><stop stop-color="#FFF7ED"/><stop offset="1" stop-color="#EFF6FF"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.13"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#334155"/></marker>
+  </defs>
+  <rect width="1200" height="520" rx="26" fill="url(#bg)"/>
+  <text x="60" y="72" font-family="Inter,Segoe UI,Arial" font-size="34" font-weight="800" fill="#111827">LLM Observability & Feedback Loop</text>
+  <text x="60" y="105" font-family="Inter,Segoe UI,Arial" font-size="17" fill="#475569">The system records not only uptime, but answer quality, cost, latency, and human feedback.</text>
+
+  <g font-family="Inter,Segoe UI,Arial" text-anchor="middle" font-weight="700">
+    <g filter="url(#s)"><rect x="90" y="185" width="180" height="85" rx="20" fill="#0EA5E9"/><text x="180" y="220" fill="white" font-size="17">User query</text><text x="180" y="246" fill="#E0F2FE" font-size="12">Request ID</text></g>
+    <g filter="url(#s)"><rect x="340" y="185" width="180" height="85" rx="20" fill="#7C3AED"/><text x="430" y="220" fill="white" font-size="17">RAG trace</text><text x="430" y="246" fill="#F3E8FF" font-size="12">Chunks + scores</text></g>
+    <g filter="url(#s)"><rect x="590" y="185" width="180" height="85" rx="20" fill="#F97316"/><text x="680" y="220" fill="white" font-size="17">LLM metrics</text><text x="680" y="246" fill="#FFEDD5" font-size="12">Tokens + cost</text></g>
+    <g filter="url(#s)"><rect x="840" y="185" width="180" height="85" rx="20" fill="#16A34A"/><text x="930" y="220" fill="white" font-size="17">Groundedness</text><text x="930" y="246" fill="#DCFCE7" font-size="12">Support score</text></g>
+    <g filter="url(#s)"><rect x="455" y="355" width="280" height="85" rx="20" fill="#334155"/><text x="595" y="390" fill="white" font-size="17">Human feedback</text><text x="595" y="416" fill="#CBD5E1" font-size="12">Rating + correction + future eval set</text></g>
+  </g>
+
+  <g stroke="#334155" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M270 228H335"/><path d="M520 228H585"/><path d="M770 228H835"/>
+    <path d="M930 270 C900 340 760 385 740 395"/>
+    <path d="M455 395 C315 385 230 315 190 272"/>
+  </g>
+</svg>

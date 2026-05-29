@@ -1,0 +1,29 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="600"><stop stop-color="#F0FDF4"/><stop offset="1" stop-color="#F5F3FF"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#334155"/></marker>
+    <filter id="s"><feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#0F172A" flood-opacity="0.14"/></filter>
+  </defs>
+  <rect width="1200" height="600" rx="26" fill="url(#bg)"/>
+  <text x="60" y="72" font-family="Inter,Segoe UI,Arial" font-size="34" font-weight="800" fill="#111827">Production Deployment Map</text>
+  <text x="60" y="105" font-family="Inter,Segoe UI,Arial" font-size="17" fill="#475569">Free/low-cost portfolio deployment today, with a clear AWS production migration path.</text>
+
+  <g font-family="Inter,Segoe UI,Arial" text-anchor="middle" font-weight="700">
+    <text x="300" y="165" font-size="22" fill="#166534">Demo deployment</text>
+    <g filter="url(#s)"><rect x="85" y="205" width="210" height="92" rx="20" fill="#FF4B4B"/><text x="190" y="243" fill="white" font-size="18">Streamlit Cloud</text><text x="190" y="270" fill="#FFE4E6" font-size="13">Chat frontend</text></g>
+    <g filter="url(#s)"><rect x="375" y="205" width="210" height="92" rx="20" fill="#111827"/><text x="480" y="243" fill="white" font-size="18">Render</text><text x="480" y="270" fill="#CBD5E1" font-size="13">FastAPI backend</text></g>
+    <g filter="url(#s)"><rect x="225" y="365" width="220" height="92" rx="20" fill="#3ECF8E"/><text x="335" y="403" fill="#042F2E" font-size="18">Supabase</text><text x="335" y="430" fill="#064E3B" font-size="13">Postgres + pgvector</text></g>
+
+    <text x="895" y="165" font-size="22" fill="#1E3A8A">AWS production story</text>
+    <g filter="url(#s)"><rect x="700" y="205" width="180" height="82" rx="18" fill="#F97316"/><text x="790" y="239" fill="white" font-size="17">ECS / EKS</text><text x="790" y="264" fill="#FFEDD5" font-size="12">API container</text></g>
+    <g filter="url(#s)"><rect x="930" y="205" width="180" height="82" rx="18" fill="#2563EB"/><text x="1020" y="239" fill="white" font-size="17">RDS</text><text x="1020" y="264" fill="#DBEAFE" font-size="12">Postgres pgvector</text></g>
+    <g filter="url(#s)"><rect x="700" y="365" width="180" height="82" rx="18" fill="#16A34A"/><text x="790" y="399" fill="white" font-size="17">S3</text><text x="790" y="424" fill="#DCFCE7" font-size="12">Documents</text></g>
+    <g filter="url(#s)"><rect x="930" y="365" width="180" height="82" rx="18" fill="#7C3AED"/><text x="1020" y="399" fill="white" font-size="17">CloudWatch</text><text x="1020" y="424" fill="#F3E8FF" font-size="12">Logs + metrics</text></g>
+    <g filter="url(#s)"><rect x="815" y="485" width="180" height="58" rx="18" fill="#334155"/><text x="905" y="520" fill="white" font-size="16">Secrets Manager</text></g>
+  </g>
+
+  <g stroke="#334155" stroke-width="3" marker-end="url(#arrow)" fill="none">
+    <path d="M295 251H370"/><path d="M480 297C470 335 390 342 355 365"/>
+    <path d="M880 246H925"/><path d="M790 287V360"/><path d="M1020 287V360"/><path d="M905 485V452"/>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: ops-knowledge-copilot-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: APP_NAME
+        value: Ops Knowledge Copilot
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_SSL
+        value: true
+      - key: EMBEDDING_PROVIDER
+        value: nvidia
+      - key: NVIDIA_API_KEY
+        sync: false
+      - key: NVIDIA_BASE_URL
+        value: https://integrate.api.nvidia.com/v1
+      - key: NVIDIA_EMBEDDING_MODEL
+        value: nvidia/nv-embedcode-7b-v1
+      - key: EMBEDDING_DIM
+        value: 4096
+      - key: CHAT_PROVIDER
+        value: gemini
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_BASE_URL
+        value: https://generativelanguage.googleapis.com/v1beta
+      - key: GEMINI_CHAT_MODEL
+        value: gemini-2.0-flash
+      - key: CORS_ORIGINS
+        value: "*"
