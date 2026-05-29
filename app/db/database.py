@@ -1,4 +1,4 @@
-from collections.abc import AsyncIterator
+import ssl
 
 import asyncpg
 
@@ -9,21 +9,31 @@ _pool: asyncpg.Pool | None = None
 
 async def init_db_pool() -> None:
     global _pool
+
+    if _pool is not None:
+        return
+
     settings = get_settings()
-    ssl = 'require' if settings.database_ssl else None
-    _pool = await asyncpg.create_pool(settings.database_url, min_size=1, max_size=10, ssl=ssl)
+
+    ssl_context = ssl.create_default_context()
+
+    _pool = await asyncpg.create_pool(
+        dsn=settings.database_url,
+        min_size=1,
+        max_size=5,
+        ssl=ssl_context,
+    )
 
 
 async def close_db_pool() -> None:
     global _pool
-    if _pool:
+
+    if _pool is not None:
         await _pool.close()
         _pool = None
 
 
-async def get_db() -> AsyncIterator[asyncpg.Connection]:
+def get_pool() -> asyncpg.Pool:
     if _pool is None:
-        await init_db_pool()
-    assert _pool is not None
-    async with _pool.acquire() as conn:
-        yield conn
+        raise RuntimeError("Database pool has not been initialized.")
+    return _pool
