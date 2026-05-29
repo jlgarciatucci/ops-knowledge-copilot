@@ -40,6 +40,7 @@ class EmbeddingService:
         payload = {
             'model': self.settings.nvidia_embedding_model,
             'input': texts,
+            'input_type':'passage',
             'encoding_format': 'float',
         }
 
