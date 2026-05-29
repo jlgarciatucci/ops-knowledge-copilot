@@ -28,7 +28,7 @@ class EmbeddingService:
             return await self._embed_many_openai(texts)
         return [self._local_hash_embedding(t) for t in texts]
 
-    async def _embed_many_nvidia(self, texts: list[str]) -> list[list[float]]:
+    async def _embed_many_nvidia(self, texts: list[str], input_type: str = "passage") -> list[list[float]]:
         if not self.settings.nvidia_api_key:
             raise AppError('NVIDIA_API_KEY is required when EMBEDDING_PROVIDER=nvidia', status_code=500)
 
