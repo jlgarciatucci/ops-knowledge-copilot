@@ -1,8 +1,6 @@
 import json
 import uuid
-
 import asyncpg
-
 from app.services.llm_service import LLMResult
 
 
@@ -11,13 +9,9 @@ class ObservabilityService:
         self.conn = conn
 
     async def log_query(
-        self,
-        question: str,
-        answer: str,
-        chunks: list[dict],
-        latency_ms: int,
-        llm: LLMResult,
-        groundedness_score: float | None,
+        self, question: str, answer: str, chunks: list[dict],
+        latency_ms: int, llm: LLMResult, groundedness_score: float | None,
+        user_email: str,
     ) -> str:
         chunk_ids = [uuid.UUID(str(c['chunk_id'])) for c in chunks]
         row = await self.conn.fetchrow(
@@ -25,21 +19,14 @@ class ObservabilityService:
             INSERT INTO query_logs (
                 question, answer, retrieved_chunk_ids, latency_ms,
                 prompt_tokens, completion_tokens, total_tokens,
-                estimated_cost_usd, groundedness_score, model_name, metadata
+                estimated_cost_usd, groundedness_score, model_name, metadata, user_email
             )
-            VALUES ($1, $2, $3::uuid[], $4, $5, $6, $7, $8, $9, $10, $11::jsonb)
+            VALUES ($1, $2, $3::uuid[], $4, $5, $6, $7, $8, $9, $10, $11::jsonb, $12)
             RETURNING id
             ''',
-            question,
-            answer,
-            chunk_ids,
-            latency_ms,
-            llm.prompt_tokens,
-            llm.completion_tokens,
-            llm.total_tokens,
-            llm.estimated_cost_usd,
-            groundedness_score,
-            llm.model_name,
-            json.dumps({'source_count': len(chunks)}),
+            question, answer, chunk_ids, latency_ms,
+            llm.prompt_tokens, llm.completion_tokens, llm.total_tokens,
+            llm.estimated_cost_usd, groundedness_score,
+            llm.model_name, json.dumps({'source_count': len(chunks)}), user_email,
         )
         return str(row['id'])
