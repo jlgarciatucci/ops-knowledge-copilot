@@ -44,7 +44,7 @@ if not st.user.is_logged_in:
     st.caption('Your email address is obtained from your Microsoft identity, not entered manually.')
     st.stop()
 
-identity = st.user.to_dict()
+identity = dict(st.user)
 user_email = (identity.get('email') or identity.get('preferred_username') or '').strip().lower()
 if not user_email or '@' not in user_email:
     st.error('Your Microsoft sign-in did not return an email. Ask the administrator to enable the email/preferred_username claim.')
