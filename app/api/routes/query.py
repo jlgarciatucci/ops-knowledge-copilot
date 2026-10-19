@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 import asyncpg
-from app.api.dependencies import db_dep, settings_dep
+
+from app.api.dependencies import db_dep, settings_dep, user_email_dep
 from app.core.config import Settings
 from app.schemas.query import QueryRequest, QueryResponse
 from app.services.rag_service import RagService
@@ -13,7 +14,8 @@ async def query_rag(
     payload: QueryRequest,
     conn: asyncpg.Connection = Depends(db_dep),
     settings: Settings = Depends(settings_dep),
+    user_email: str = Depends(user_email_dep),
 ) -> QueryResponse:
     service = RagService(conn, settings)
-    result = await service.answer(payload.question, payload.top_k, payload.filters)
+    result = await service.answer(payload.question, payload.top_k, payload.filters, user_email=user_email)
     return QueryResponse(**result)
