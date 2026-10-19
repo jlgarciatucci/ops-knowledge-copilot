@@ -24,7 +24,7 @@ class RagService:
         self.groundedness_service = GroundednessService()
         self.observability_service = ObservabilityService(conn)
 
-    async def answer(self, question: str, top_k: int, filters: dict[str, str] | None) -> dict:
+    async def answer(self, question: str, top_k: int, filters: dict[str, str] | None, user_email: str) -> dict:
         start = time.perf_counter()
 
         # NVIDIA NV-EmbedCode requires input_type='query' for user questions.
@@ -47,6 +47,7 @@ class RagService:
             latency_ms=latency_ms,
             llm=llm_result,
             groundedness_score=groundedness,
+            user_email=user_email,
         )
         return {
             'query_id': query_id,
